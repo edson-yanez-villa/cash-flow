@@ -6,7 +6,7 @@
     <template #resume>
       <Resume :label="ahorroTotal" :total-amount="100000" :amount="amount">
         <template #graphic> graphic </template>
-        <template #action> action </template>
+        <template #action> <Action /> </template>
       </Resume>
     </template>
     <template #movements>
@@ -19,6 +19,7 @@
 import Layout from "./Layout.vue";
 import Header from "./Header.vue";
 import Resume from "./Resume/Index.vue";
+import Action from "./Action.vue";
 import Movements from "./Movements/Index.vue";
 
 export default {
@@ -26,6 +27,7 @@ export default {
     Layout,
     Header,
     Resume,
+    Action,
     Movements,
   },
   data() {

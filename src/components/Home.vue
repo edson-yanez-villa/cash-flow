@@ -8,11 +8,11 @@
         <template #graphic>
           <Graphic :amounts="amounts" />
         </template>
-        <template #action> <Action /> </template>
+        <template #action> <Action @create="create" /> </template>
       </Resume>
     </template>
     <template #movements>
-      <Movements :movements="movements" />
+      <Movements :movements="movements" @remove="remove" />
     </template>
   </Layout>
 </template>
@@ -38,43 +38,7 @@ export default {
     return {
       amount: null,
       ahorroTotal: null,
-      movements: [
-        {
-          id: 1,
-          title: "Movimiento",
-          description: "Deposito de salario",
-          amount: 1000,
-          time: new Date("02-02-2023"),
-        },
-        {
-          id: 2,
-          title: "Movimiento 1",
-          description: "Deposito de honorarios",
-          amount: 500,
-          time: new Date("02-03-2023"),
-        },
-        {
-          id: 3,
-          title: "Movimiento 3",
-          description: "Comida",
-          amount: -100,
-          time: new Date("02-04-2023"),
-        },
-        {
-          id: 4,
-          title: "Movimiento 4",
-          description: "Colegiatura",
-          amount: 1000,
-          time: new Date("01-05-2023"),
-        },
-        {
-          id: 5,
-          title: "Movimiento 5",
-          description: "Reparación equipo",
-          amount: 1000,
-          time: new Date("01-02-2023"),
-        },
-      ],
+      movements: [],
     };
   },
   computed: {
@@ -82,7 +46,7 @@ export default {
       const lastDays = this.movements
         .filter((m) => {
           const today = new Date();
-          const oldDate = today.setDate(today.getDate() - 47);
+          const oldDate = today.setDate(today.getDate() - 30);
           return m.time > oldDate;
         })
         .map((m) => m.amount);
@@ -90,6 +54,15 @@ export default {
         const lastMovements = lastDays.slice(0, i);
         return lastMovements.reduce((suma, movement) => suma + movement, 0);
       });
+    },
+  },
+  methods: {
+    create(movement) {
+      this.movements.push(movement);
+    },
+    remove(id) {
+      const index = this.movements.findIndex((m) => m.id === id);
+      this.movements.splice(index, 1);
     },
   },
 };
